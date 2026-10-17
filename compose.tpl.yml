@@ -1,0 +1,28 @@
+services:
+  duosubs:
+    image: ghcr.io/tuanitfdev/duosubs-deploy:${APP_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: duosubs-container
+    # Cấu hình quan trọng nhất để nhận diện GPU NVIDIA
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+    # ports:
+    #   - "8000:8000"
+    # Mount thư mục hiện tại vào container để dev không cần build lại liên tục
+    # volumes:
+    #   - .:/opt/ws
+    # Sử dụng file .env cho biến môi trường
+    # env_file:
+    #   - .env
+    # Giữ container chạy ngầm (tương đương -it)
+    stdin_open: true
+    tty: true
+    # Lệnh mặc định khi start
+    # command: /bin/bash
