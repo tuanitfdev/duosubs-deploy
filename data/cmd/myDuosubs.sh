@@ -26,8 +26,8 @@ secondaryFilename="${BASENAME}.en.srt"
 export PYTHONIOENCODING="utf-8"
 
 SCRIPT_BLOCK=$(cat <<EOF
-# cd "$WORKING_DIR"
-# echo "Current folder: \$PWD"
+cd "$WORKING_DIR"
+echo "Current folder: \$PWD"
 # duosubs merge -p "$primaryFilename" -s "$secondaryFilename" --mode mixed --model LaBSE --device cpu --format-all srt --output-name "$BASENAME-duosubs"
 duosubs merge -p "$primaryFilename" -s "$secondaryFilename" --mode synced --model LaBSE --device cuda --format-all srt --output-name "$BASENAME-duosubs"
 EOF
