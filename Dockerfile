@@ -20,11 +20,16 @@ ARG PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY --from=model-hub /data/huggingface/hub /workspace/.hf_home/hub
 
 COPY data/fixture/* /my/dl/duosubs/
+COPY --chmod=755 data/cmd/* /my/cmd/
 
 RUN uv pip install --no-cache-dir duosubs
 
-ARG SUB_NAME="h2500-gn"
+ARG SUB_NAME="h2500-gn-short"
 
-RUN duosubs merge -p ${SUB_NAME}.en.srt -s ${SUB_NAME}.vi.srt --mode mixed --device cuda --format-all srt --output-name "${SUB_NAME}-duosubs"
+RUN duosubs merge -p ${SUB_NAME}.en.srt -s ${SUB_NAME}.vi.srt --mode mixed --device cpu --format-all srt --output-name "${SUB_NAME}-duosubs"
+RUN duosubs merge -p ${SUB_NAME}.en.srt -s ${SUB_NAME}.vi.srt --mode mixed --device cuda --format-all srt --output-name "${SUB_NAME}-duosubs" || true
+
+RUN mkdir -p /my/dl/duosubs/01
+
 
 
